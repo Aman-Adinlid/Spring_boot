@@ -2,24 +2,45 @@ package se.lexicon.Spring_boot.entity;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 public class Person {
-@Id
-@GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int personId;
-@Column(nullable = false,length = 200)
+    @Column(nullable = false, length = 200)
     private String name;
-@Column(nullable = false,length = 100)
+    @Column(nullable = false, length = 100)
     private String email;
-@Column(nullable = false)
+    @Column(nullable = false)
     private LocalDate birthDate;
-@Column(nullable = false,columnDefinition = "tinyint(1) default 1")
+    @Column(nullable = false, columnDefinition = "tinyint(1) default 1")
     private boolean status;
-   private LocalDate registerDate;
+    private LocalDate registerDate;
+
+    // public Person() {
+    //registerDate = LocalDate.now();
+
 
     public Person() {
-        registerDate = LocalDate.now();
+    }
+
+    public Person(int personId, String name, String email, LocalDate birthDate, boolean status, LocalDate registerDate) {
+        this.personId = personId;
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.status = status;
+        this.registerDate = registerDate;
+    }
+
+    public Person(String name, String email, LocalDate birthDate, boolean status, LocalDate registerDate) {
+        this.name = name;
+        this.email = email;
+        this.birthDate = birthDate;
+        this.status = status;
+        this.registerDate = registerDate;
     }
 
     public int getPersonId() {
@@ -68,5 +89,18 @@ public class Person {
 
     public void setRegisterDate(LocalDate registerDate) {
         this.registerDate = registerDate;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Person person = (Person) o;
+        return personId == person.personId && status == person.status && Objects.equals(name, person.name) && Objects.equals(email, person.email) && Objects.equals(birthDate, person.birthDate) && Objects.equals(registerDate, person.registerDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(personId, name, email, birthDate, status, registerDate);
     }
 }
