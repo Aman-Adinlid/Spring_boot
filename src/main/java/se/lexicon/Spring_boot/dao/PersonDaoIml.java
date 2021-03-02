@@ -1,18 +1,21 @@
 package se.lexicon.Spring_boot.dao;
 
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 import se.lexicon.Spring_boot.entity.Person;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import java.util.List;
-
+@Repository
 public class PersonDaoIml implements PersonDao {
 
     @PersistenceContext
     EntityManager entityManager;
 
     @Override
+    @Transactional
     public Person create(Person person) {
         entityManager.persist(person); // *****************notice that persist means create or save**************
         return person;
